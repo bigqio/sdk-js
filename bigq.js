@@ -212,13 +212,32 @@ class BigQ {
         var msg = new BigQMessage(
             this.email,
             this.password,
-            "ListClients",
+            "JoinChannel",
             this.guid,
             this.serverGuid,
             null,
             true,
             null,
             null);
+
+        this._watsonSend(msg.toString());
+        return;
+    }
+
+    joinChannel(guid) {
+        if (!guid) return;
+        var msg = new BigQMessage(
+            this.email,
+            this.password,
+            "JoinChannel",
+            this.guid,
+            this.serverGuid,
+            guid,
+            null,
+            true,
+            null,
+            null
+        );
 
         this._watsonSend(msg.toString());
         return;

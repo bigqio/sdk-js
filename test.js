@@ -69,6 +69,29 @@ function processCommands() {
                 //</editor-fold>
 
             }
+            else if (command.startsWith("join ")) {
+
+                //<editor-fold desc="Join Channel">
+
+                command = command.substring(1, command.length);
+                var spacePos = result.command.indexOf(" ");
+                if (spacePos <= 0) {
+                    console.log("");
+                    console.log("Usage: join channelguid");
+                    console.log("       i.e.");
+                    console.log("       join 0000");
+                }
+                else {
+                    var channelGuid = command.substring(spacePos, command.length);
+                    console.log("");
+                    console.log("Joining channel " + channelGuid);
+
+                    bigq.joinChannel(channelGuid);
+                }
+
+                //</editor-fold>
+
+            }
             else {
 
                 // <editor-fold desc="Other Commands">
@@ -76,13 +99,14 @@ function processCommands() {
                 switch (result.command) {
                     case "?":
                         console.log("Available commands:");
-                        console.log(" ?           help, this menu");
-                        console.log(" q           quit");
-                        console.log(" /name msg   send msg to name");
-                        console.log(" #chan msg   send msg to channel");
-                        console.log(" who         show which clients are connected");
-                        console.log(" state       show BigQ connection state");
-                        console.log(" reconnect   reconect to BigQ");
+                        console.log(" ?                   help, this menu");
+                        console.log(" q                   quit");
+                        console.log(" /<name> <msg>       send msg to name");
+                        console.log(" join <changuid>     join the specified channel by GUID");
+                        console.log(" #<changuid> <msg>   send msg to channel by GUID");
+                        console.log(" who                 show which clients are connected");
+                        console.log(" state               show BigQ connection state");
+                        console.log(" reconnect           reconect to BigQ");
                         break;
 
                     case "q":
