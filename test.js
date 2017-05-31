@@ -157,12 +157,13 @@ function processCommands() {
                         console.log("Available commands:");
                         console.log(" ?                       help, this menu");
                         console.log(" q                       quit");
+                        console.log(" who                     show which clients are connected");
                         console.log(" /<name> <msg>           send msg to name");
+                        console.log(" channels                list channels");
                         console.log(" join <changuid>         join the specified channel by GUID");
                         console.log(" leave <changuid>        leave the specified channel by GUID");
                         console.log(" subscribe <changuid>    subscribe to the specified channel by GUID");
                         console.log(" #<changuid> <msg>       send msg to channel by GUID");
-                        console.log(" who                     show which clients are connected");
                         console.log(" state                   show BigQ connection state");
                         console.log(" reconnect               reconect to BigQ");
                         break;
@@ -173,6 +174,10 @@ function processCommands() {
 
                     case "who":
                         bigq.listClients();
+                        break;
+
+                    case "channels":
+                        bigq.listChannels();
                         break;
 
                     case "state":

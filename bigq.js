@@ -224,6 +224,22 @@ class BigQ {
         return;
     }
 
+    listChannels() {
+        var msg = new BigQMessage(
+            this.email,
+            this.password,
+            "ListChannels",
+            this.guid,
+            this.serverGuid,
+            null,
+            true,
+            null,
+            null);
+
+        this._watsonSend(msg.toString());
+        return;
+    }
+
     joinChannel(guid) {
         if (!guid) return;
         var msg = new BigQMessage(
