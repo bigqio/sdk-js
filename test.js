@@ -81,7 +81,7 @@ function processCommands() {
                     console.log("");
                     console.log("Joining channel " + channelGuid);
 
-                    bigq.joinChannel(channelGuid);
+                    bigq.joinChannel(channelGuid, onChannelMessage);
                 }
 
                 //</editor-fold>
@@ -123,7 +123,7 @@ function processCommands() {
                     console.log("");
                     console.log("Subscribing channel " + channelGuid);
 
-                    bigq.subscribeChannel(channelGuid);
+                    bigq.subscribeChannel(channelGuid, onChannelMessage);
                 }
 
                 // </editor-fold>
@@ -223,6 +223,15 @@ function onMessage(data, err) {
     }
     else {
         console.log("Message error: " + err);
+    }
+}
+
+function onChannelMessage(data, err) {
+    if (data) {
+        console.log("Channel message received [" + data.channelGuid + "]: " + data.data);
+    }
+    else {
+        console.log("Channel message error: " + err);
     }
 }
 

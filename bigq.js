@@ -82,6 +82,11 @@ class BigQ {
             if (!msg.command) {
                 // <editor-fold desc="No command">
 
+                if (msg.channelGuid) {
+                    this._onChannelMessage(msg);
+                    return;
+                }
+
                 if (this.onMessage) {
                     setTimeout(() => this.onMessage(msg, null));
                 }
@@ -101,6 +106,12 @@ class BigQ {
 
                     case "login":
                         this._onLoginResponse(msg);
+                        break;
+
+                    case "joinchannel":
+                    case "leavechannel":
+                    case "subscribechannel":
+                    case "unsubscribechannel":
                         break;
 
                     default:
@@ -129,6 +140,21 @@ class BigQ {
         else {
             this._log("bigq login failed");
             if (this.onConnect) setTimeout(() => this.onConnect(null, "Login failed"));
+        }
+    }
+
+    _onChannelMessage(msg) {
+        if (this.channelCallbacks) {
+            if (this.channelCallbacks.hasOwnProperty(msg.channelGuid)) {
+                setTimeout(() => this.channelCallbacks[msg.channelGuid](msg, null));
+            }
+        }
+
+        if (this.onMessage) {
+            setTimeout(() => this.onMessage(msg, null));
+        }
+        else {
+            this._log("bigq no message callback defined");
         }
     }
 
@@ -240,7 +266,7 @@ class BigQ {
         return;
     }
 
-    joinChannel(guid) {
+    joinChannel(guid, callback) {
         if (!guid) return;
         var msg = new BigQMessage(
             this.email,
@@ -256,6 +282,17 @@ class BigQ {
         );
 
         this._watsonSend(msg.toString());
+
+        if (callback) {
+            if (this.channelCallbacks) {
+                if (this.channelCallbacks.hasOwnProperty(guid)) {
+                    delete this.channelCallbacks[guid];
+                }
+
+                this.channelCallbacks[guid] = callback;
+            }
+        }
+
         return;
     }
 
@@ -294,6 +331,17 @@ class BigQ {
         );
 
         this._watsonSend(msg.toString());
+
+        if (callback) {
+            if (this.channelCallbacks) {
+                if (this.channelCallbacks.hasOwnProperty(guid)) {
+                    delete this.channelCallbacks[guid];
+                }
+
+                this.channelCallbacks[guid] = callback;
+            }
+        }
+
         return;
     }
 
@@ -336,10 +384,13 @@ class BigQ {
         this.connected = false;
         this.loggedIn = false;
 
-        // callbacks
+        // general callbacks
         this.onConnect = onConnect;
         this.onDsconnect = onDisconnect;
         this.onMessage = onMessage;
+
+        // channel callbacks
+        this.channelCallbacks = { };
 
         // initialize watson
         this._log("bigq initializing connection to: " + hostname + ":" + port);
