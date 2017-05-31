@@ -84,14 +84,14 @@ class BigQ {
 
                 if (msg.channelGuid) {
                     this._onChannelMessage(msg);
-                    return;
-                }
-
-                if (this.onMessage) {
-                    setTimeout(() => this.onMessage(msg, null));
                 }
                 else {
-                    this._log("bigq no message callback defined");
+                    if (this.onMessage) {
+                        setTimeout(() => this.onMessage(msg, null));
+                    }
+                    else {
+                        this._log("bigq no message callback defined");
+                    }
                 }
 
                 // </editor-fold>
@@ -106,12 +106,6 @@ class BigQ {
 
                     case "login":
                         this._onLoginResponse(msg);
-                        break;
-
-                    case "joinchannel":
-                    case "leavechannel":
-                    case "subscribechannel":
-                    case "unsubscribechannel":
                         break;
 
                     default:
@@ -155,6 +149,14 @@ class BigQ {
         }
         else {
             this._log("bigq no message callback defined");
+        }
+    }
+
+    _removeChannelCallback(guid) {
+        if (this.channelCallbacks) {
+            if (this.channelCallbacks.hasOwnProperty(guid)) {
+                delete this.channelCallbacks[guid];
+            }
         }
     }
 
@@ -312,6 +314,7 @@ class BigQ {
         );
 
         this._watsonSend(msg.toString());
+        this._removeChannelCallback(guid);
         return;
     }
 
@@ -333,13 +336,8 @@ class BigQ {
         this._watsonSend(msg.toString());
 
         if (callback) {
-            if (this.channelCallbacks) {
-                if (this.channelCallbacks.hasOwnProperty(guid)) {
-                    delete this.channelCallbacks[guid];
-                }
-
-                this.channelCallbacks[guid] = callback;
-            }
+            this._removeChannelCallback(guid);
+            this.channelCallbacks[guid] = callback;
         }
 
         return;
@@ -361,6 +359,7 @@ class BigQ {
         );
 
         this._watsonSend(msg.toString());
+        this._removeChannelCallback(guid);
         return;
     }
 
