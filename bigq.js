@@ -212,7 +212,7 @@ class BigQ {
         var msg = new BigQMessage(
             this.email,
             this.password,
-            "JoinChannel",
+            "ListClients",
             this.guid,
             this.serverGuid,
             null,
