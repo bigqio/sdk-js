@@ -6,9 +6,7 @@
 
 class BigQMessage {
 
-    //
-    // Internal methods
-    //
+    // <editor-fold desc="Internal methods">
 
     _log(msg) {
         if (this.debug) console.log(msg);
@@ -37,6 +35,10 @@ class BigQMessage {
             "0000000";
         return ret;
     }
+
+    // </editor-fold>
+
+    // <editor-fold desc="Conversion">
 
     toString() {
         var ret = "";
@@ -174,13 +176,9 @@ class BigQMessage {
         }
     }
 
-    //
-    // External methods
-    //
+    // </editor-fold>
 
-    //
-    // Constructor
-    //
+    // <editor-fold desc="Constructor">
 
     constructor(email, password, command, senderGuid, recipientGuid, channelGuid, sync, contentType, data) {
         this.email = email;
@@ -196,6 +194,8 @@ class BigQMessage {
         this.createdUtc = this._timestamp();
         this.debug = false;
     }
+
+    // </editor-fold>
 };
 
 module.exports = BigQMessage;
