@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "ws": ">=3.0.0",
+    "watsonwebsocket": ">=1.0.0",
     "prompt": ">=1.0.0"
   }
 }
