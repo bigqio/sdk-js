@@ -262,6 +262,44 @@ class BigQ {
         return;
     }
 
+    subscribeChannel(guid) {
+        if (!guid) return;
+        var msg = new BigQMessage(
+            this.email,
+            this.password,
+            "SubscribeChannel",
+            this.guid,
+            this.serverGuid,
+            guid,
+            null,
+            true,
+            null,
+            null
+        );
+
+        this._watsonSend(msg.toString());
+        return;
+    }
+
+    unsubscribeChannel(guid) {
+        if (!guid) return;
+        var msg = new BigQMessage(
+            this.email,
+            this.password,
+            "UnsubscribeChannel",
+            this.guid,
+            this.serverGuid,
+            guid,
+            null,
+            true,
+            null,
+            null
+        );
+
+        this._watsonSend(msg.toString());
+        return;
+    }
+
     //</editor-fold>
 
     //<editor-fold desc="Constructor">

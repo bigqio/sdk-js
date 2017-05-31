@@ -87,7 +87,6 @@ function processCommands() {
                 //</editor-fold>
             }
             else if (command.startsWith("leave ")) {
-
                 //<editor-fold desc="Leave Channel">
 
                 command = command.substring(1, command.length);
@@ -107,7 +106,48 @@ function processCommands() {
                 }
 
                 //</editor-fold>
+            }
+            else if (command.startsWith("subscribe ")) {
+                // <editor-fold desc="Subscribe Channel">
 
+                command = command.substring(1, command.length);
+                var spacePos = result.command.indexOf(" ");
+                if (spacePos <= 0) {
+                    console.log("");
+                    console.log("Usage: subscribe channelguid");
+                    console.log("       i.e.");
+                    console.log("       subscribe 0000");
+                }
+                else {
+                    var channelGuid = command.substring(spacePos, command.length);
+                    console.log("");
+                    console.log("Subscribing channel " + channelGuid);
+
+                    bigq.subscribeChannel(channelGuid);
+                }
+
+                // </editor-fold>
+            }
+            else if (command.startsWith("unsubscribe ")) {
+                // <editor-fold desc="Unsubscribe channel">
+
+                command = command.substring(1, command.length);
+                var spacePos = result.command.indexOf(" ");
+                if (spacePos <= 0) {
+                    console.log("");
+                    console.log("Usage: unsubscribe channelguid");
+                    console.log("       i.e.");
+                    console.log("       unsubscribe 0000");
+                }
+                else {
+                    var channelGuid = command.substring(spacePos, command.length);
+                    console.log("");
+                    console.log("Unsubscribing channel " + channelGuid);
+
+                    bigq.unsubscribeChannel(channelGuid);
+                }
+
+                // </editor-fold>
             }
             else {
                 // <editor-fold desc="Other Commands">
@@ -115,15 +155,16 @@ function processCommands() {
                 switch (result.command) {
                     case "?":
                         console.log("Available commands:");
-                        console.log(" ?                   help, this menu");
-                        console.log(" q                   quit");
-                        console.log(" /<name> <msg>       send msg to name");
-                        console.log(" join <changuid>     join the specified channel by GUID");
-                        console.log(" leave <changuid>    leave the specified channel by GUID");
-                        console.log(" #<changuid> <msg>   send msg to channel by GUID");
-                        console.log(" who                 show which clients are connected");
-                        console.log(" state               show BigQ connection state");
-                        console.log(" reconnect           reconect to BigQ");
+                        console.log(" ?                       help, this menu");
+                        console.log(" q                       quit");
+                        console.log(" /<name> <msg>           send msg to name");
+                        console.log(" join <changuid>         join the specified channel by GUID");
+                        console.log(" leave <changuid>        leave the specified channel by GUID");
+                        console.log(" subscribe <changuid>    subscribe to the specified channel by GUID");
+                        console.log(" #<changuid> <msg>       send msg to channel by GUID");
+                        console.log(" who                     show which clients are connected");
+                        console.log(" state                   show BigQ connection state");
+                        console.log(" reconnect               reconect to BigQ");
                         break;
 
                     case "q":
