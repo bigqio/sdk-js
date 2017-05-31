@@ -138,7 +138,7 @@ class BigQ {
 
     _onOpen(evt) {
         this._log("bigq connected to " + this.hostname + ":" + this.port);
-        this._login();
+        setTimeout(() => this._login(), 1000);
         this.connected = true;
         // do not set loggedIn, set it no login response
         // do not fire callback here, call it on login response
@@ -230,6 +230,25 @@ class BigQ {
             this.email,
             this.password,
             "JoinChannel",
+            this.guid,
+            this.serverGuid,
+            guid,
+            null,
+            true,
+            null,
+            null
+        );
+
+        this._watsonSend(msg.toString());
+        return;
+    }
+
+    leaveChannel(guid) {
+        if (!guid) return;
+        var msg = new BigQMessage(
+            this.email,
+            this.password,
+            "LeaveChannel",
             this.guid,
             this.serverGuid,
             guid,

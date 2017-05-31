@@ -22,7 +22,6 @@ function processCommands() {
             console.log("Received command: " + result.command);
             var command = result.command.toString().trim();
             if (command.startsWith("/")) {
-
                 //<editor-fold desc="User Message">
 
                 command = command.substring(1, command.length);
@@ -43,10 +42,8 @@ function processCommands() {
                 }
 
                 //</editor-fold>
-
             }
             else if (command.startsWith("#")) {
-
                 //<editor-fold desc="Channel Message">
 
                 command = command.substring(1, command.length);
@@ -67,10 +64,8 @@ function processCommands() {
                 }
 
                 //</editor-fold>
-
             }
             else if (command.startsWith("join ")) {
-
                 //<editor-fold desc="Join Channel">
 
                 command = command.substring(1, command.length);
@@ -90,10 +85,31 @@ function processCommands() {
                 }
 
                 //</editor-fold>
+            }
+            else if (command.startsWith("leave ")) {
+
+                //<editor-fold desc="Leave Channel">
+
+                command = command.substring(1, command.length);
+                var spacePos = result.command.indexOf(" ");
+                if (spacePos <= 0) {
+                    console.log("");
+                    console.log("Usage: leave channelguid");
+                    console.log("       i.e.");
+                    console.log("       leave 0000");
+                }
+                else {
+                    var channelGuid = command.substring(spacePos, command.length);
+                    console.log("");
+                    console.log("Leaving channel " + channelGuid);
+
+                    bigq.leaveChannel(channelGuid);
+                }
+
+                //</editor-fold>
 
             }
             else {
-
                 // <editor-fold desc="Other Commands">
 
                 switch (result.command) {
@@ -103,6 +119,7 @@ function processCommands() {
                         console.log(" q                   quit");
                         console.log(" /<name> <msg>       send msg to name");
                         console.log(" join <changuid>     join the specified channel by GUID");
+                        console.log(" leave <changuid>    leave the specified channel by GUID");
                         console.log(" #<changuid> <msg>   send msg to channel by GUID");
                         console.log(" who                 show which clients are connected");
                         console.log(" state               show BigQ connection state");
