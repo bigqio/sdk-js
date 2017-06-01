@@ -6,6 +6,7 @@
 //
 // dependencies:
 //   prompt   "npm install prompt"
+//   bigqsdk  "npm install bigqsdk"
 //
 
 const BigQ = require("./bigq.js");

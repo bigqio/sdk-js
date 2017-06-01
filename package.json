@@ -16,8 +16,9 @@
   "author": "jchristn",
   "license": "MIT",
   "dependencies": {
-    "ws": ">=3.0.0",
+    "bigqmessage": "^1.0.0",
+    "prompt": ">=1.0.0",
     "watsonwebsocket": ">=1.0.0",
-    "prompt": ">=1.0.0"
+    "ws": ">=3.0.0"
   }
 }

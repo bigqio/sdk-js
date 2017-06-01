@@ -5,6 +5,7 @@
 //
 // Dependencies:
 //   watsonwebsocket       "npm install watsonwebsocket"       https://www.npmjs.com/package/watsonwebsocket
+//   bigqmessage           "npm install bigqmessage"           https://www.npmjs.com/package/bigqmessage
 //
 
 "use strict";
