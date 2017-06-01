@@ -219,7 +219,7 @@ function onDisconnect(data, err) {
 
 function onMessage(data, err) {
     if (data) {
-        console.log("Message received: " + data);
+        console.log(" * " + data.senderGuid + ": " + data.data);
     }
     else {
         console.log("Message error: " + err);
@@ -228,7 +228,7 @@ function onMessage(data, err) {
 
 function onChannelMessage(data, err) {
     if (data) {
-        console.log("Channel message received [" + data.channelGuid + "]: " + data.data);
+        console.log(" * [" + data.channelGuid + "] " + data.senderGuid + ": " + data.data);
     }
     else {
         console.log("Channel message error: " + err);

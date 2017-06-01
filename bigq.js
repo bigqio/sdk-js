@@ -143,12 +143,13 @@ class BigQ {
                 setTimeout(() => this.channelCallbacks[msg.channelGuid](msg, null));
             }
         }
-
-        if (this.onMessage) {
-            setTimeout(() => this.onMessage(msg, null));
-        }
         else {
-            this._log("bigq no message callback defined");
+            if (this.onMessage) {
+                setTimeout(() => this.onMessage(msg, null));
+            }
+            else {
+                this._log("bigq no message callback defined");
+            }
         }
     }
 
