@@ -27,16 +27,16 @@ function onChannelMessage(data, err) { }
 Initialize the SDK.
 ```
 let bigq = new BigQ(
-	"localhost", 		// BigQ server hostname
-	8002, 				// TCP port
-	false, 				// enable/disable SSL
-	"default", 			// client email address
-	"default", 			// client password
-	"default", 			// client GUID
-	false,				// enable/disable debug logging
-	onConnect, 			// callback to use upon successful connection
-	onDisconnect, 		// callback to use upon failed connection
-	onMessage);			// callback to use upon message receipt
+	"localhost",	// BigQ server hostname
+	8002, 			// TCP port
+	false, 			// enable/disable SSL
+	"default", 		// client email address
+	"default", 		// client password
+	"default", 		// client GUID
+	false,			// enable/disable debug logging
+	onConnect, 		// callback to use upon successful connection
+	onDisconnect, 	// callback to use upon failed connection
+	onMessage);		// callback to use upon message receipt
 ```
 
 Send a private message to another client.
