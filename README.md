@@ -48,6 +48,13 @@ bigq.send(
 	"hello!");		// data
 ```
 
+Create channel.
+```
+bigq.createUnicastChannel("channelName", 0, onChannelMessage);  // 0 for public, 1 for private
+bigq.createMulticastChannel("channelName", 0, onChannelMessage);
+bigq.createBroadcastChannel("channelName", 0, onChannelMessage);
+```
+
 List channels.
 ```
 bigq.listChannels();

@@ -12,6 +12,7 @@
 
 var Watson = require("watsonwebsocket");
 var BigQMessage = require("./bigqmessage.js");
+var BigQChannel = require("./bigqchannel.js");
 
 class BigQ {
 
@@ -362,6 +363,123 @@ class BigQ {
 
         this._watsonSend(msg.toString());
         this._removeChannelCallback(guid);
+        return;
+    }
+
+    createUnicastChannel(name, priv, callback) {
+        if (!name) return;
+        var channel = new BigQChannel(name, priv, this.guid);
+        channel.setUnicast();
+
+        var msg = new BigQMessage(
+            this.email,
+            this.password,
+            "CreateChannel",
+            this.guid,
+            this.serverGuid,
+            null,
+            false,
+            "application/json",
+            channel.toString()
+        );
+
+        this._watsonSend(msg.toString());
+
+        if (callback) {
+            if (this.channelCallbacks) {
+                if (this.channelCallbacks.hasOwnProperty(channel.channelGuid)) {
+                    delete this.channelCallbacks[channel.channelGuid];
+                }
+
+                this.channelCallbacks[channel.channelGuid] = callback;
+            }
+        }
+
+        return;
+    }
+
+    createBroadcastChannel(name, priv, callback) {
+        if (!name) return;
+        var channel = new BigQChannel(name, priv, this.guid);
+        channel.setBroadcast();
+
+        var msg = new BigQMessage(
+            this.email,
+            this.password,
+            "CreateChannel",
+            this.guid,
+            this.serverGuid,
+            null,
+            false,
+            "application/json",
+            channel.toString()
+        );
+
+        this._watsonSend(msg.toString());
+
+        if (callback) {
+            if (this.channelCallbacks) {
+                if (this.channelCallbacks.hasOwnProperty(channel.channelGuid)) {
+                    delete this.channelCallbacks[channel.channelGuid];
+                }
+
+                this.channelCallbacks[channel.channelGuid] = callback;
+            }
+        }
+
+        return;
+    }
+
+    createMulticastChannel(name, priv, callback) {
+        if (!name) return;
+        var channel = new BigQChannel(name, priv, this.guid);
+        channel.setMulticast();
+
+        var msg = new BigQMessage(
+            this.email,
+            this.password,
+            "CreateChannel",
+            this.guid,
+            this.serverGuid,
+            null,
+            false,
+            "application/json",
+            channel.toString()
+        );
+
+        this._watsonSend(msg.toString());
+
+        if (callback) {
+            if (this.channelCallbacks) {
+                if (this.channelCallbacks.hasOwnProperty(channel.channelGuid)) {
+                    delete this.channelCallbacks[channel.channelGuid];
+                }
+
+                this.channelCallbacks[channel.channelGuid] = callback;
+            }
+        }
+
+        return;
+    }
+
+    deleteChannel(guid) {
+        if (!guid) return;
+        var msg = new BigQMessage(
+            this.email,
+            this.password,
+            "DeleteChannel",
+            this.guid,
+            this.serverGuid,
+            guid,
+            null,
+            true,
+            null,
+            null
+        );
+
+        this._watsonSend(msg.toString());
+        this._removeChannelCallback(guid);
+
         return;
     }
 

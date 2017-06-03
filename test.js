@@ -150,6 +150,90 @@ function processCommands() {
 
                 // </editor-fold>
             }
+            else if (command.startsWith("ucast ")) {
+                // <editor-fold desc="Create unicast channel">
+
+                command = command.substring(1, command.length);
+                var spacePos = result.command.indexOf(" ");
+                if (spacePos <= 0) {
+                    console.log("");
+                    console.log("Usage: ucast name");
+                    console.log("       i.e.");
+                    console.log("       ucast new_channel");
+                }
+                else {
+                    var channelName = command.substring(spacePos, command.length);
+                    console.log("");
+                    console.log("Creating unicast channel " + channelName);
+
+                    bigq.createUnicastChannel(channelName, 0, onChannelMessage);
+                }
+
+                // </editor-fold>
+            }
+            else if (command.startsWith("mcast ")) {
+                // <editor-fold desc="Create multicast channel">
+
+                command = command.substring(1, command.length);
+                var spacePos = result.command.indexOf(" ");
+                if (spacePos <= 0) {
+                    console.log("");
+                    console.log("Usage: mcast name");
+                    console.log("       i.e.");
+                    console.log("       mcast new_channel");
+                }
+                else {
+                    var channelName = command.substring(spacePos, command.length);
+                    console.log("");
+                    console.log("Creating multicast channel " + channelName);
+
+                    bigq.createMulticastChannel(channelName, 0, onChannelMessage);
+                }
+
+                // </editor-fold>
+            }
+            else if (command.startsWith("bcast ")) {
+                // <editor-fold desc="Create broadcast channel">
+
+                command = command.substring(1, command.length);
+                var spacePos = result.command.indexOf(" ");
+                if (spacePos <= 0) {
+                    console.log("");
+                    console.log("Usage: bcast name");
+                    console.log("       i.e.");
+                    console.log("       bcast new_channel");
+                }
+                else {
+                    var channelName = command.substring(spacePos, command.length);
+                    console.log("");
+                    console.log("Creating broadcast channel " + channelName);
+
+                    bigq.createBroadcastChannel(channelName, 0, onChannelMessage);
+                }
+
+                // </editor-fold>
+            }
+            else if (command.startsWith("delete ")) {
+                // <editor-fold desc="Delete channel">
+
+                command = command.substring(1, command.length);
+                var spacePos = result.command.indexOf(" ");
+                if (spacePos <= 0) {
+                    console.log("");
+                    console.log("Usage: delete name");
+                    console.log("       i.e.");
+                    console.log("       delete new_channel");
+                }
+                else {
+                    var channelGuid = command.substring(spacePos, command.length);
+                    console.log("");
+                    console.log("Deleting channel " + channelGuid);
+
+                    bigq.deleteChannel(channelGuid);
+                }
+
+                // </editor-fold>
+            }
             else {
                 // <editor-fold desc="Other Commands">
 
@@ -161,6 +245,10 @@ function processCommands() {
                         console.log(" who                     show which clients are connected");
                         console.log(" /<name> <msg>           send msg to name");
                         console.log(" channels                list channels");
+                        console.log(" ucast <name>            create unicast channel with specified name");
+                        console.log(" mcast <name>            create multicast channel with specified name");
+                        console.log(" bcast <name>            create broadcast channel with specified name");
+                        console.log(" delete <name>           delte channel with specified name");
                         console.log(" join <changuid>         join the specified channel by GUID");
                         console.log(" leave <changuid>        leave the specified channel by GUID");
                         console.log(" subscribe <changuid>    subscribe to the specified channel by GUID");
