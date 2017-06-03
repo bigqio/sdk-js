@@ -1,6 +1,6 @@
 {
   "name": "bigqsdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Javascript client SDK for BigQ",
   "main": "bigq.js",
   "scripts": {
